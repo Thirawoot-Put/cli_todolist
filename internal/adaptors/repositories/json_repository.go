@@ -1,11 +1,11 @@
-package jsonrepository
+package adaptors
 
 import (
 	"encoding/json"
 	"fmt"
 	"os"
 	"task_manager/internal/domain"
-	"task_manager/internal/infrastructure/ports/output"
+	"task_manager/internal/ports/output"
 )
 
 const filename = "task.json"

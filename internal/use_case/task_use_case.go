@@ -1,10 +1,10 @@
-package jsonusecase
+package usecase
 
 import (
 	"fmt"
 	"task_manager/internal/domain"
-	"task_manager/internal/infrastructure/ports/input"
-	"task_manager/internal/infrastructure/ports/output"
+	"task_manager/internal/ports/input"
+	"task_manager/internal/ports/output"
 )
 
 type TaskUseCaseImpl struct {
