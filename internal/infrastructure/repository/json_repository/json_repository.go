@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"os"
 	"task_manager/internal/domain"
-	"task_manager/internal/infrastructure/repository"
+	"task_manager/internal/infrastructure/ports/output"
 )
 
 const filename = "task.json"
 
 type JsonRepository struct{}
 
-func NewJsonRepository() repository.TaskRepository {
+func NewJsonRepository() output.TaskOutputPort {
 	return &JsonRepository{}
 }
 

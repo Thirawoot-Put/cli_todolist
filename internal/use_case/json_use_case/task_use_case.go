@@ -3,21 +3,21 @@ package jsonusecase
 import (
 	"fmt"
 	"task_manager/internal/domain"
-	"task_manager/internal/infrastructure/repository"
-	usecase "task_manager/internal/use_case"
+	"task_manager/internal/infrastructure/ports/input"
+	"task_manager/internal/infrastructure/ports/output"
 )
 
-type JsonUseCaseImpl struct {
-	repo repository.TaskRepository
+type TaskUseCaseImpl struct {
+	repo output.TaskOutputPort
 }
 
-func NewJsonUseCase(repo repository.TaskRepository) usecase.TaskUseCase {
-	return &JsonUseCaseImpl{
+func NewTaskUseCase(repo output.TaskOutputPort) input.TaskInputPort {
+	return &TaskUseCaseImpl{
 		repo: repo,
 	}
 }
 
-func (u *JsonUseCaseImpl) AddTasks(tasks []domain.Task) error {
+func (u *TaskUseCaseImpl) AddTasks(tasks []domain.Task) error {
 	if err := u.repo.SaveTasks(tasks); err != nil {
 		return fmt.Errorf(`%s`, err)
 	}
@@ -25,7 +25,7 @@ func (u *JsonUseCaseImpl) AddTasks(tasks []domain.Task) error {
 	return nil
 }
 
-func (u *JsonUseCaseImpl) ReadTasks() ([]domain.Task, error) {
+func (u *TaskUseCaseImpl) ReadTasks() ([]domain.Task, error) {
 	data, err := u.repo.LoadTasks()
 	if err != nil {
 		return nil, fmt.Errorf(`%s`, err)
