@@ -17,8 +17,8 @@ func NewTaskUseCase(repo output.TaskOutputPort) input.TaskInputPort {
 	}
 }
 
-func (u *TaskUseCaseImpl) AddTasks(tasks []domain.Task) error {
-	if err := u.repo.SaveTasks(tasks); err != nil {
+func (u *TaskUseCaseImpl) AddTasks(task domain.Task) error {
+	if err := u.repo.SaveTasks(task); err != nil {
 		return fmt.Errorf(`%s`, err)
 	}
 

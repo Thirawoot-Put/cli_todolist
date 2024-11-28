@@ -1,4 +1,4 @@
-package adaptors
+package repositories
 
 import (
 	"encoding/json"
@@ -16,8 +16,8 @@ func NewJsonRepository() output.TaskOutputPort {
 	return &JsonRepository{}
 }
 
-func (r *JsonRepository) SaveTasks(tasks []domain.Task) error {
-	data, err := json.MarshalIndent(tasks, "", "  ")
+func (r *JsonRepository) SaveTasks(task domain.Task) error {
+	data, err := json.MarshalIndent(task, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal tasks: %w", err)
 	}
