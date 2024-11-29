@@ -16,8 +16,8 @@ func NewJsonRepository() output.TaskOutputPort {
 	return &JsonRepository{}
 }
 
-func (r *JsonRepository) SaveTasks(task domain.Task) error {
-	data, err := json.MarshalIndent(task, "", "  ")
+func (r *JsonRepository) SaveTasks(tasks []domain.Task) error {
+	data, err := json.MarshalIndent(tasks, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal tasks: %w", err)
 	}

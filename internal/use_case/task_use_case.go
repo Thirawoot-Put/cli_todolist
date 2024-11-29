@@ -17,8 +17,21 @@ func NewTaskUseCase(repo output.TaskOutputPort) input.TaskInputPort {
 	}
 }
 
-func (u *TaskUseCaseImpl) AddTasks(task domain.Task) error {
-	if err := u.repo.SaveTasks(task); err != nil {
+func (u *TaskUseCaseImpl) AddTasks(task string) error {
+	tasks, err := u.ReadTasks()
+	if err != nil {
+		return err
+	}
+
+	newTask := domain.Task{
+		ID:   len(tasks) + 1,
+		Name: task,
+		Done: false,
+	}
+
+	tasks = append(tasks, newTask)
+
+	if err := u.repo.SaveTasks(tasks); err != nil {
 		return fmt.Errorf(`%s`, err)
 	}
 

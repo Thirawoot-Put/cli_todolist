@@ -3,6 +3,6 @@ package input
 import "task_manager/internal/domain"
 
 type TaskInputPort interface {
-	AddTasks(tasks domain.Task) error
+	AddTasks(task string) error
 	ReadTasks() ([]domain.Task, error)
 }

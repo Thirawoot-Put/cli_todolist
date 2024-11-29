@@ -1,9 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"task_manager/internal/adaptors/handlers"
+	"task_manager/internal/adaptors/repositories"
+	usecase "task_manager/internal/use_case"
 )
 
 func main() {
-	fmt.Println("hello task manager")
+	r := repositories.NewJsonRepository()
+	u := usecase.NewTaskUseCase(r)
+	c := handlers.NewCliHandler(u)
+
+	c.CliTaskManager()
 }
