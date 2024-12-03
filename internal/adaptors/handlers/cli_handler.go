@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 	"task_manager/internal/ports/input"
 )
 
@@ -16,41 +19,42 @@ func NewCliHandler(uc input.TaskInputPort) *CliHandler {
 }
 
 func (h *CliHandler) CliTaskManager() {
-	for {
-		fmt.Println("\nTask Manager")
-		fmt.Println("1. Add Task")
-		fmt.Println("2. View Tasks")
-		fmt.Println("3. Exit")
-		fmt.Print("Choose an option: ")
+	scanner := bufio.NewScanner(os.Stdin)
 
-		var choice int
-		_, err := fmt.Scanln(&choice)
-		if err != nil {
-			fmt.Printf("Get choice error: %s", err)
+	fmt.Println("\nWelcome to Task Manager")
+	fmt.Println("Command: add <task name>, list, done <task id>, exit")
+
+	for {
+		fmt.Print("> ")
+		if !scanner.Scan() {
+			break
 		}
 
-		switch choice {
+		input := scanner.Text()
+		command := strings.Fields(input)
 
-		case 1:
-			var name string
-			fmt.Println("Enter your task name")
+		if len(command) == 0 {
+			fmt.Println("Please enter a command")
+		}
 
-			_, err := fmt.Scanln(&name)
-			if err != nil {
-				fmt.Printf("Get choice error: %s", err)
+		switch command[0] {
+
+		case "add":
+			if len(command) < 2 {
+				fmt.Println("Usage: add <task name>")
 				continue
 			}
 
-			err = h.usecase.AddTasks(name)
+			taskName := strings.Join(command[1:], " ")
 
+			err := h.usecase.AddTasks(taskName)
 			if err != nil {
-				fmt.Printf("Error to add task: %v\n", err)
-				continue
-			} else {
-				fmt.Println(`Add task success!`)
+				fmt.Println("Failed to add task: %w", err)
 			}
 
-		case 2:
+			fmt.Println("Add task success!")
+
+		case "list":
 			tasks, err := h.usecase.ReadTasks()
 			if err != nil {
 				fmt.Printf("Error to get tasks: %v\n", err)
@@ -61,7 +65,7 @@ func (h *CliHandler) CliTaskManager() {
 				}
 			}
 
-		case 3:
+		case "exit":
 			fmt.Println(`Goodbye`)
 			return
 

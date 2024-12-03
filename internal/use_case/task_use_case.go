@@ -46,3 +46,17 @@ func (u *TaskUseCaseImpl) ReadTasks() ([]domain.Task, error) {
 
 	return data, nil
 }
+
+// func (u *TaskUseCaseImpl) UpdateTaskName(id int, newTaskName string) error {
+// 	tasks, err := u.repo.LoadTasks()
+// 	if err != nil {
+// 		return fmt.Errorf("%w", err)
+// 	}
+//
+// 	// find task
+// 	// update target task
+// 	// put in tasks list
+// 	// save them
+//
+// 	return nil
+// }
