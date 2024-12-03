@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"task_manager/internal/ports/input"
 )
@@ -44,12 +45,14 @@ func (h *CliHandler) CliTaskManager() {
 				fmt.Println("Usage: add <task name>")
 				continue
 			}
+			fmt.Println("test")
 
 			taskName := strings.Join(command[1:], " ")
 
 			err := h.usecase.AddTasks(taskName)
 			if err != nil {
-				fmt.Println("Failed to add task: %w", err)
+				fmt.Printf("Failed to add task: %s\n", err)
+				continue
 			}
 
 			fmt.Println("Add task success!")
@@ -64,6 +67,26 @@ func (h *CliHandler) CliTaskManager() {
 					fmt.Printf("ID: %d, Name: %s, Done: %t \n", task.ID, task.Name, task.Done)
 				}
 			}
+
+		case "done":
+			if len(command) != 2 {
+				fmt.Println("Usage: done <task id>")
+				continue
+			}
+
+			id, err := strconv.Atoi(command[1])
+			if err != nil {
+				fmt.Printf("Failed to convert data; please make sure id is integer: %s\n", err)
+				continue
+			}
+
+			err = h.usecase.TriggerTask(id)
+			if err != nil {
+				fmt.Printf("Failed to update task id %d: %s", id, err)
+				continue
+			}
+
+			fmt.Println("Update task success!")
 
 		case "exit":
 			fmt.Println(`Goodbye`)
