@@ -23,7 +23,7 @@ func (h *CliHandler) CliTaskManager() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("\nWelcome to Task Manager")
-	fmt.Println("Command: add <task name>, list, done <task id>, exit")
+	fmt.Println("Command: add <task name>, list, done <task id>, rm <task id>, exit")
 
 	for {
 		fmt.Print("> ")
