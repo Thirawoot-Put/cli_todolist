@@ -6,4 +6,5 @@ type TaskInputPort interface {
 	AddTasks(task string) error
 	ReadTasks() ([]domain.Task, error)
 	TriggerTask(id int) error
+	RemoveTask(id int) error
 }

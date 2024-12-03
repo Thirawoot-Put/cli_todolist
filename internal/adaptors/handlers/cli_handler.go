@@ -88,6 +88,26 @@ func (h *CliHandler) CliTaskManager() {
 
 			fmt.Println("Update task success!")
 
+		case "rm":
+			if len(command) != 2 {
+				fmt.Println("Usage: rm <task id>")
+				continue
+			}
+
+			id, err := strconv.Atoi(command[1])
+			if err != nil {
+				fmt.Printf("Failed to convert data; please make sure id is integer: %s\n", err)
+				continue
+			}
+
+			err = h.usecase.RemoveTask(id)
+			if err != nil {
+				fmt.Printf("Failed to update task id %d: %s", id, err)
+				continue
+			}
+
+			fmt.Println("Update task success!")
+
 		case "exit":
 			fmt.Println(`Goodbye`)
 			return

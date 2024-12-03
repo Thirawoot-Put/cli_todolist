@@ -66,3 +66,28 @@ func (u *TaskUseCaseImpl) TriggerTask(id int) error {
 
 	return nil
 }
+
+func (u *TaskUseCaseImpl) RemoveTask(id int) error {
+	tasks, err := u.repo.LoadTasks()
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
+
+	i := 0
+	for idx, task := range tasks {
+		if task.ID == id {
+			continue
+		}
+
+		tasks[i] = tasks[idx]
+		i++
+	}
+	tasks = tasks[:i]
+
+	err = u.repo.SaveTasks(tasks)
+	if err != nil {
+		fmt.Println("Failed to update task in save period: %w", err)
+	}
+
+	return nil
+}
