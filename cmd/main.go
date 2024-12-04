@@ -3,12 +3,12 @@ package main
 import (
 	"task_manager/internal/adaptors/handlers"
 	"task_manager/internal/adaptors/repositories"
-	usecase "task_manager/internal/use_case"
+	"task_manager/internal/services"
 )
 
 func main() {
 	r := repositories.NewJsonRepository()
-	u := usecase.NewTaskUseCase(r)
+	u := services.NewTaskService(r)
 	c := handlers.NewCliHandler(u)
 
 	c.CliTaskManager()

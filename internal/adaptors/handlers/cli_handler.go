@@ -8,12 +8,12 @@ import (
 )
 
 type CliHandler struct {
-	usecase input.TaskInputPort
+	service input.TaskInputPort
 }
 
-func NewCliHandler(uc input.TaskInputPort) *CliHandler {
+func NewCliHandler(s input.TaskInputPort) *CliHandler {
 	return &CliHandler{
-		usecase: uc,
+		service: s,
 	}
 }
 
@@ -46,7 +46,7 @@ func (h *CliHandler) CliTaskManager() {
 			return
 		}
 
-		err := h.usecase.AddTasks(*addTaskName)
+		err := h.service.AddTasks(*addTaskName)
 		if err != nil {
 			fmt.Printf("Failed to add task: %s\n", err)
 			return
@@ -60,7 +60,7 @@ func (h *CliHandler) CliTaskManager() {
 			return
 		}
 
-		tasks, err := h.usecase.ReadTasks()
+		tasks, err := h.service.ReadTasks()
 		if err != nil {
 			fmt.Printf("Error to get tasks: %v\n", err)
 			return
@@ -80,7 +80,7 @@ func (h *CliHandler) CliTaskManager() {
 			return
 		}
 
-		err := h.usecase.TriggerTask(*doneId)
+		err := h.service.TriggerTask(*doneId)
 		if err != nil {
 			fmt.Printf("Failed to update task id %d: %s", *doneId, err)
 			return
@@ -98,7 +98,7 @@ func (h *CliHandler) CliTaskManager() {
 			return
 		}
 
-		err := h.usecase.RemoveTask(*removeId)
+		err := h.service.RemoveTask(*removeId)
 		if err != nil {
 			fmt.Printf("Failed to update task id %d: %s", *removeId, err)
 			os.Exit(1)

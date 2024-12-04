@@ -1,4 +1,4 @@
-package usecase
+package services
 
 import (
 	"fmt"
@@ -7,17 +7,17 @@ import (
 	"task_manager/internal/ports/output"
 )
 
-type TaskUseCaseImpl struct {
+type TaskServiceImpl struct {
 	repo output.TaskOutputPort
 }
 
-func NewTaskUseCase(repo output.TaskOutputPort) input.TaskInputPort {
-	return &TaskUseCaseImpl{
+func NewTaskService(repo output.TaskOutputPort) input.TaskInputPort {
+	return &TaskServiceImpl{
 		repo: repo,
 	}
 }
 
-func (u *TaskUseCaseImpl) AddTasks(task string) error {
+func (u *TaskServiceImpl) AddTasks(task string) error {
 	tasks, err := u.ReadTasks()
 	if err != nil {
 		return err
@@ -38,7 +38,7 @@ func (u *TaskUseCaseImpl) AddTasks(task string) error {
 	return nil
 }
 
-func (u *TaskUseCaseImpl) ReadTasks() ([]domain.Task, error) {
+func (u *TaskServiceImpl) ReadTasks() ([]domain.Task, error) {
 	data, err := u.repo.LoadTasks()
 	if err != nil {
 		return nil, fmt.Errorf(`%s`, err)
@@ -47,7 +47,7 @@ func (u *TaskUseCaseImpl) ReadTasks() ([]domain.Task, error) {
 	return data, nil
 }
 
-func (u *TaskUseCaseImpl) TriggerTask(id int) error {
+func (u *TaskServiceImpl) TriggerTask(id int) error {
 	tasks, err := u.repo.LoadTasks()
 	if err != nil {
 		return fmt.Errorf("%w", err)
@@ -67,7 +67,7 @@ func (u *TaskUseCaseImpl) TriggerTask(id int) error {
 	return nil
 }
 
-func (u *TaskUseCaseImpl) RemoveTask(id int) error {
+func (u *TaskServiceImpl) RemoveTask(id int) error {
 	tasks, err := u.repo.LoadTasks()
 	if err != nil {
 		return fmt.Errorf("%w", err)
